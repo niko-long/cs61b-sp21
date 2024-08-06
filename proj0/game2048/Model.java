@@ -113,6 +113,41 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        for (int c = 0; c < board.size(); c +=1) {
+            int m = 0;
+            boolean mergeResult = false;
+            for(int r = board.size()-1; r >= 0; r -= 1) {
+                board.setViewingPerspective(side);
+                Tile t = board.tile(c, r);
+                int n = 0;
+
+                if (board.tile(c,r) != null) {
+                    for (int h = r + 1; h < board.size(); h += 1){
+                        if (board.tile(c,h) == null) {
+                        n += 1;
+                        } else if (board.tile(c, r + n + 1) != null && tile(c, r).value() == tile(c, r+n+1).value() && mergeResult == false) {//else if (tile(c, r).value() == tile(c, h).value() && m == 0) { //这里一个问题卡了很久是想写 && 结果一开始写成了 || 符号 导致一test4一直过不去
+                            n += 1;  //这里还是有一个 不太容易发现的bug 如果一列是满的 然后有两个tile的值隔着一个不为空的tile 就会移动
+                            //else if (board.tile(c, r + n + 1) != null && tile(c, r).value() == tile(c, r+n+1).value() && m == 0)修改m == 0 这个麻烦的控制语句
+                        }
+                    }
+                    mergeResult = board.move(c,r + n, t);
+
+                    if (mergeResult == true) {
+                        m += 1;
+                        //System.out.println("m"); //用来debug
+                        //System.out.println(m);
+                        score += 2*t.value();
+                    }
+
+                }
+                board.setViewingPerspective(Side.NORTH);
+                if (n!=0) {
+                    changed = true;
+                }
+
+
+            }
+        }
 
         checkGameOver();
         if (changed) {
@@ -138,7 +173,17 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
-        return false;
+        int n = 0;
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if (b.tile(i, j) == null) {
+                    n += 1;
+                } else {
+                    n += 0;
+                }
+            }
+        }
+        return n != 0;
     }
 
     /**
@@ -148,7 +193,25 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
-        return false;
+
+        int n = 0;
+        int MAX_PIECE = 2048;
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                Tile tile = b.tile(i, j);
+                /* System.out.println(tile.value()); 加上这个本来是为了debug
+                没想到成为了后边一直出bug的原因 :Cannot invoke "game2048.Tile.value()" because "tile" is null
+                 */
+                if (tile != null) {
+                    if (tile.value() == MAX_PIECE){
+                        n += 1;
+                    } else{
+                        n += 0;
+                    }
+                }
+            }
+        }
+        return n != 0;
     }
 
     /**
@@ -159,7 +222,32 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
-        return false;
+        int n = 0;
+        if (emptySpaceExists(b)){
+            n += 1;
+        } else if(!emptySpaceExists(b)){
+            for (int i = 1; i < b.size() -1 ; i++ ) {
+                for (int j = 1; j < b.size() - 1; j++ ){
+                    //Tile tile = b.tile(i, j);
+                    //这里的判断语句虽然应该不是最简单的,但是一开始想的要更复杂
+                    /*  if (b.tile(i, j).value() == b.tile(i-1, j).value() ||
+                            b.tile(i, j).value() == b.tile(i+1, j).value() ||
+                            b.tile(i, j).value() == b.tile(i, j-1).value() ||
+                            b.tile(i, j).value() == b.tile(i, j+1).value())
+                            这样存在一个问题 就是边上的tile 没有办法检验到,导致一个test过不去 才发现还有这个严重问题
+                             第一反应是再补充if 语句 把在边上的行和列的特殊情况列出来 就会导致程序特别臃肿(虽然现在也不简洁)*/
+                    if (b.tile(i-1, j-1).value() == b.tile(i-1, j).value() ||
+                            b.tile(i+1, j).value() == b.tile(i+1, j+1).value() ||
+                            b.tile(i, j-1).value() == b.tile(i+1, j-1).value() ||
+                            b.tile(i, j+1).value() == b.tile(i+1, j+1).value()) {
+                        n += 1;
+                    }
+                    //20230805 接着开始做 该考虑test里的testUpBasicMerge了
+
+                }
+            }
+        }
+        return n!=0;
     }
 
 
