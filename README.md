@@ -17,11 +17,11 @@ study notes of ucb cs61b-sp21 data structure and algorithm
 
 - Project0_2048  
   <img src="assets/project0_picture.png" alt="game picture" width="300">  
-  oops, just found the 'maxscore' didn't update, although the code has passed all the tests.
+  oops, just found the 'maxscore' didn't update, although the code has passed all the tests.  
   <img src="assets/project0_score_function_modified.png" alt="maxScore function works!" width="300">  
   update, modified score and maxScore funtions  
     <img src="assets/project0_gameoverpicture.png" alt="game over record!" width="300">  
-  update, misunderstood of the game score rule, actually the first submission is right, the maxScore only displayed at the moment of game over.  
+  update, misunderstood the game score rule, actually the first submission is right, the maxScore only displayed at the moment of game over.  
 (maybe this is coding :bug: :sob: :smiley: ).  
 - time cost total for cs61b (up to now):36h  
   <img src="assets/61b_time.png" alt="time cost for 61b" width="300">
