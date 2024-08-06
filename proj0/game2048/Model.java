@@ -136,7 +136,8 @@ public class Model extends Observable {
                         m += 1;
                         //System.out.println("m"); //用来debug
                         //System.out.println(m);
-                        score += 2*t.value();
+                        score = 2*t.value();
+                        maxScore += 2*t.value();
                     }
 
                 }
