@@ -120,8 +120,9 @@ public class Model extends Observable {
                 board.setViewingPerspective(side);
                 Tile t = board.tile(c, r);
                 int n = 0;
-
+                //score = 0;
                 if (board.tile(c,r) != null) {
+
                     for (int h = r + 1; h < board.size(); h += 1){
                         if (board.tile(c,h) == null) {
                         n += 1;
@@ -136,8 +137,7 @@ public class Model extends Observable {
                         m += 1;
                         //System.out.println("m"); //用来debug
                         //System.out.println(m);
-                        score = 2*t.value();
-                        maxScore += 2*t.value();
+                        score += 2*t.value();
                     }
 
                 }
