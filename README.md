@@ -9,15 +9,15 @@ study notes of ucb cs61b-sp21 data structure and algorithm
 **2024/08/06**
 - Finished [project0:2048](https://sp21.datastructur.es/materials/proj/proj0/proj0)
 - time cost: 13h
-  ![time cost](assets/project0_timecost.png)
+  ![time cost](assets/project0_timecost.png){width=200px}
 - submission record: submitted at [gradescope](https://www.gradescope.com/), with course code provided by UC Berkeley, thanks for knowledge sharing!
-  ![gradescope](assets/project0_gradescope.png)
-  ![submission](assets/project0_submission.png)
+  ![gradescope](assets/project0_gradescope.png){width=200px}
+  ![submission](assets/project0_submission.png){width=200px}
 - full grade get
-  ![final result](assets/project0_fullgrade.png)
+  ![final result](assets/project0_fullgrade.png){width=200px}
 
 - Project0_2048
-  ![game picture](assets/project0_picture.png)
+  ![game picture](assets/project0_picture.png){width=200px}
   oops, just found the 'maxscore' didn't update, althogh the code has passed all the tests
 - time cost inttal for cs61b (up to now):36h
-  ![time cost for 61b](assets/61b_time.png)
+  ![time cost for 61b](assets/61b_time.png){width=200px}
