@@ -1,7 +1,9 @@
 # cs61b-sp21
 study notes of ucb cs61b-sp21 data structure and algorithm
 
-
+**2024/10/10**
+- Finished lab2
+- time cost: 3h
 
 **2024/08/06**
 - Finished [project0:2048](https://sp21.datastructur.es/materials/proj/proj0/proj0)  
