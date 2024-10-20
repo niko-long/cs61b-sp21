@@ -1,6 +1,6 @@
 package deque;
 
-public class ArrayDeque <T>{
+public class ArrayDeque<T>{
     private T[] items;
     private int size;
 
@@ -53,6 +53,9 @@ public class ArrayDeque <T>{
     }
 
     public T removeFirst(){
+        if(isEmpty()){
+            return null;
+        }
         T x = get(0);
         T[] newItems = (T[]) new Object[items.length - 1];
         System.arraycopy(items, 1, newItems, 0, items.length - 1);
@@ -62,6 +65,9 @@ public class ArrayDeque <T>{
     }
 
     public T removeLast(){
+        if(isEmpty()){
+            return null;
+        }
         T x = get(size-1);
         items[size-1] = null;
         size = size - 1;
