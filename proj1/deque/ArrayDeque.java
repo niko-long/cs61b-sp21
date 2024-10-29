@@ -20,7 +20,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         int index = 0;
         for (int i = 0; i < size; i += 1) {
             index = arrayInd(i);
-            a[capacity / 4 + i] = items[index];
+            a[(capacity / 4 + i) % capacity] = items[index];
         }
         items = a;
         nextFirst = capacity / 4 - 1;
@@ -131,13 +131,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         T x = get(0);
-        System.arraycopy(items, 1, items, 0, size - 1);
         size = size - 1;
         int index = arrayInd(0);
         items[index] = null;
         nextFirst = index;
-        if (size >= 4 && size < items.length / 4) {
-            resize(size * 2);
+        if (size > 0 && size < items.length / 4) {
+            resize(items.length / 2);
         }
         return x;
     }
@@ -152,8 +151,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         items[index] = null;
         size = size - 1;
         nextLast = index;
-        if (size >= 4 && size < items.length / 4) {
-            resize(size * 2);
+        if (size > 0 && size < items.length / 4) {
+            resize(items.length / 2);
         }
         return x;
     }
