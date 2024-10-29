@@ -5,15 +5,35 @@ import java.util.Iterator;
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     private int size;
+    private int nextFirst;
+    private int nextLast;
 
     public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
+        nextFirst = 4;
+        nextLast = 5;
+
     }
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        System.arraycopy(items, 0, a, 0, size);
+        int index = 0;
+        for (int i = 0; i < size; i += 1) {
+            index = arrayInd(i);
+            a[capacity / 4 + i] = items[index];
+        }
         items = a;
+        nextFirst = capacity / 4 - 1;
+        nextLast = nextFirst + size + 1;
+    }
+
+
+    private int arrayInd(int ind) {
+        if (nextFirst + 1 + ind >= items.length) {
+            return nextFirst + 1 + ind - items.length;
+        } else {
+            return nextFirst + 1 + ind;
+        }
     }
 
     @Override
@@ -33,14 +53,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             wizPos += 1;
             return returnItem;
         }
-    }
-    private boolean contains(T x) {
-        for (int i = 0; i < size; i += 1) {
-            if (items[i].equals(x)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override
@@ -66,7 +78,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return false;
         }
         for (int i = 0; i < this.size(); i++) {
-            if (!items[i].equals(o.get(i))) {
+            if (!this.get(i).equals(o.get(i))) {
                 return false;
             }
         }
@@ -79,8 +91,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == items.length) {
             resize(size * 2);
         }
-        System.arraycopy(items, 0, items, 1, size);
-        items[0] = x;
+        items[nextFirst]  = x;
+        nextFirst = (nextFirst - 1 + items.length) % items.length;
         size = size + 1;
     }
 
@@ -89,7 +101,13 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == items.length) {
             resize(size * 2);
         }
-        items[size] = x;
+        items[nextLast] = x;
+        if (nextLast == items.length - 1) {
+            nextLast = 0;
+        } else {
+            nextLast += 1;
+        }
+
         size = size + 1;
     }
 
@@ -115,6 +133,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         T x = get(0);
         System.arraycopy(items, 1, items, 0, size - 1);
         size = size - 1;
+        int index = arrayInd(0);
+        items[index] = null;
+        nextFirst = index;
         if (size >= 4 && size < items.length / 4) {
             resize(size * 2);
         }
@@ -127,8 +148,10 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         T x = get(size - 1);
-        items[size - 1] = null;
+        int index = arrayInd(size - 1);
+        items[index] = null;
         size = size - 1;
+        nextLast = index;
         if (size >= 4 && size < items.length / 4) {
             resize(size * 2);
         }
@@ -137,7 +160,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T get(int index) {
-        return items[index];
+        return items[arrayInd(index)];
     }
 
 }
