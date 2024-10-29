@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.StdDraw;
 /**
  * A client that uses the synthesizer package to replicate a plucked guitar string sound
  */
-public class GuitarHero {
+public class HarpHero {
     public static final String keyboard = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";
     public static final int Num_Keys = keyboard.length();
     public static final double CONCERT_A = 440.0;
@@ -13,10 +13,10 @@ public class GuitarHero {
 
     public static void main(String[] args) {
 
-        GuitarString[] strings = new GuitarString[Num_Keys];
+        Harp[] strings = new Harp[Num_Keys];
         for (int i = 0; i < Num_Keys; i += 1) {
             double frequency = CONCERT_A * Math.pow(2, (i - 24.0) / 12.0);
-            strings[i] = new GuitarString(frequency);
+            strings[i] = new Harp(frequency);
         }
         while (true) {
             /* check if the user has typed a key; if so, process it */
@@ -29,7 +29,7 @@ public class GuitarHero {
 
             /* compute the superposition of samples */
             double sample =  0.0;
-            for (GuitarString string : strings) {
+            for (Harp string : strings) {
                 sample += string.sample();
             }
 
@@ -37,7 +37,7 @@ public class GuitarHero {
             StdAudio.play(sample);
 
             /* advance the simulation of each guitar string by one step */
-            for (GuitarString string : strings) {
+            for (Harp string : strings) {
                 string.tic();
             }
         }

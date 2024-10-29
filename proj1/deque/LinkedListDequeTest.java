@@ -2,6 +2,8 @@ package deque;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import java.util.Iterator;
+import java.util.Optional;
 
 
 /** Performs some basic linked list tests. */
@@ -58,6 +60,27 @@ public class LinkedListDequeTest {
 		assertTrue("lld1 should be empty after removal", lld1.isEmpty());
 
     }
+
+
+    @Test
+    /** Adds an item, then removes an item, and ensures that dll is empty afterwards. */
+    public void nextTest() {
+
+        //System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
+
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+        // should be empty
+        assertTrue("lld1 should be empty upon initialization", lld1.isEmpty());
+
+        lld1.addFirst(10);
+        lld1.addFirst(20);
+        Iterator<Integer> iterator = lld1.iterator();
+        assertEquals((Integer) 20, iterator.next());
+        assertTrue("hasNext",iterator.hasNext());
+        assertEquals((Integer) 10, iterator.next());
+        assertFalse("hasNext",iterator.hasNext());
+        }
+
 
     @Test
     /* Tests removing from an empty deque */

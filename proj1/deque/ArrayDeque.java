@@ -51,15 +51,22 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (other == null) {
             return false;
         }
-        if (other.getClass() != this.getClass()) {
+        if (!(other instanceof Deque)) {
             return false;
         }
-        ArrayDeque<T> o = (ArrayDeque<T>) other;
+        /*
+        if (other.getClass() != this.getClass()) {
+            System.out.println("other.getClass()" + other.getClass());
+            System.out.println("this.getClass()" + this.getClass());
+            return false;
+        }
+         */
+        Deque<T> o = (Deque<T>) other;
         if (o.size() != this.size()) {
             return false;
         }
-        for (T item : this) {
-            if (!o.contains(item)) {
+        for (int i=0; i < this.size(); i++) {
+            if (!this.get(i).equals(o.get(i))) {
                 return false;
             }
         }
@@ -72,12 +79,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == items.length) {
             resize(size * 2);
         }
-        T[] newItems = (T[]) new Object[items.length + 1];
-        /* 新建一个数组 并将首位设置为x*/
-        newItems[0] = x;
-
-        System.arraycopy(items, 0, newItems, 1, items.length);
-        items = newItems;
+        System.arraycopy(items, 0, items, 1, size);
+        items[0] = x;
         size = size + 1;
     }
 
@@ -110,10 +113,11 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         T x = get(0);
-        T[] newItems = (T[]) new Object[items.length - 1];
-        System.arraycopy(items, 1, newItems, 0, items.length - 1);
-        items = newItems;
+        System.arraycopy(items, 1, items, 0, size - 1);
         size = size - 1;
+        if (size > 0 && size < items.length * 0.25){
+            resize(Math.max(100,size * 2));
+        }
         return x;
     }
 
@@ -125,7 +129,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         T x = get(size - 1);
         items[size - 1] = null;
         size = size - 1;
-
+        if (size > 0 && size < items.length * 0.25){
+            resize(Math.max(100,size * 2));
+        }
         return x;
     }
 

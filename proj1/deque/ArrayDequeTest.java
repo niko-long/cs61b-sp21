@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.util.Random;
+
 
 /** Performs some basic linked list tests. */
 public class ArrayDequeTest {
@@ -68,9 +70,9 @@ public class ArrayDequeTest {
 
         ArrayDeque<Integer> lld1 = new ArrayDeque<>();
         lld1.addFirst(3);
-
-        lld1.removeLast();
         lld1.removeFirst();
+        lld1.removeLast();
+
         lld1.removeLast();
         lld1.removeFirst();
 
@@ -81,6 +83,43 @@ public class ArrayDequeTest {
 
         assertEquals(errorMsg, 0, size);
 
+    }
+
+    @Test
+    public void randomAddRemoveTest() {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        Random random = new Random();
+        int testCount = 100000; // 随机操作的次数, 设置的较小的时候有一定的概率会通过, 查找不到问题
+        int size = 0; // 当前的大小
+
+        for (int i = 0; i < testCount; i++) {
+            double action = random.nextDouble(); // 生成 0.0 到 1.0 之间的随机数
+
+            // 根据随机数选择操作
+            if (action < 0.05) { // 5%的概率执行 addLast
+                int valueToAdd = random.nextInt(100); // 随机生成一个值
+                deque.addLast(valueToAdd);
+                size++; // 更新大小
+            } else if (action < 0.95) { // 90%的概率执行 removeFirst
+                if (!deque.isEmpty()) {
+                    deque.removeFirst();
+                    size--; // 更新大小
+                }
+            } else { // 5%的概率执行 isEmpty
+                boolean expectedEmpty = (size == 0);
+                assertEquals("isEmpty() returned incorrect value.", expectedEmpty, deque.isEmpty());
+            }
+
+            // 断言当前大小是否正确
+            assertEquals("Size is incorrect after operations.", size, deque.size());
+        }
+
+        // 测试清空后，再次确认 isEmpty 的行为
+        while (!deque.isEmpty()) {
+            deque.removeFirst();
+        }
+        assertTrue("Deque should be empty after removing all elements.", deque.isEmpty());
+        assertEquals("Size should be zero after removing all elements.", 0, deque.size());
     }
 
     @Test
@@ -114,6 +153,28 @@ public class ArrayDequeTest {
         boolean passed2 = false;
         assertEquals("Should return null when removeFirst is called on an empty Deque,", null, lld1.removeFirst());
         assertEquals("Should return null when removeLast is called on an empty Deque,", null, lld1.removeLast());
+
+
+    }
+    @Test
+    public void testEqualDequesWithSameElements() {
+        LinkedListDeque<Integer> LinkedListDeque = new LinkedListDeque<>();
+        ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
+
+        // 添加相同元素到两个 deque 中
+        LinkedListDeque.addLast(1);
+        LinkedListDeque.addLast(2);
+        LinkedListDeque.addLast(3);
+
+        arrayDeque.addLast(1);
+        arrayDeque.addLast(2);
+        arrayDeque.addLast(3);
+
+        // 测试两个 deque 是否相等
+        assertEquals("LinkedListDeque and ArrayDeque should be equal with same elements",true,arrayDeque.equals(LinkedListDeque));
+
+        // 测试反过来的相等性
+        assertEquals("ArrayDeque and LinkedListDeque should be equal with same elements",true,LinkedListDeque.equals(arrayDeque));
 
 
     }

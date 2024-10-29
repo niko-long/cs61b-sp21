@@ -1,11 +1,10 @@
 package gh2;
 
-import deque.ArrayDeque;
 
 public class Harp extends GuitarString{
     private static final double DECAY = 0.995;
     public Harp(double frequency) {
-        super(frequency);
+        super(frequency/2);
     }
     @Override
     public void tic() {
@@ -14,6 +13,4 @@ public class Harp extends GuitarString{
         Double item = -DECAY * 0.5 * (c + d);
         buffer.addLast(item);
     }
-
-
 }

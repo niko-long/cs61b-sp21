@@ -1,6 +1,7 @@
 package deque;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private class Node {
@@ -34,12 +35,18 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private class LinkedListDequeIterator implements Iterator<T> {
         private Node wizPos = sentinel.next;
         public boolean hasNext() {
-            return wizPos != null;
+            // System.out.println(wizPos != null);
+            // System.out.println(wizPos.item != null);
+            return wizPos.item != null; //注意这里的wizPos不是null, 判断条件应该是wizPos.item是不是null
         }
         public T next() {
-            T returnItem = wizPos.item;
-            wizPos = wizPos.next;
-            return returnItem;
+            if(!hasNext()){
+                throw new NoSuchElementException("No more elements in the deque.");
+            } else {
+                T returnItem = wizPos.item;
+                wizPos = wizPos.next;
+                return returnItem;
+            }
         }
     }
 
@@ -51,10 +58,10 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         if (other == null) {
             return false;
         }
-        if (other.getClass() != this.getClass()) {
+        if (!(other instanceof Deque)) {
             return false;
         }
-        LinkedListDeque<T> o = (LinkedListDeque<T>) other;
+        Deque<T> o = (Deque<T>) other;
         if (o.size() != this.size()) {
             return false;
         }
