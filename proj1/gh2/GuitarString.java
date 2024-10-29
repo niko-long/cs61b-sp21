@@ -17,15 +17,6 @@ public class GuitarString {
 
     private Deque<Double> buffer;
 
-    public Double getBufferfirst() {
-        return buffer.get(0);
-    }
-    public  Double removeBufferFirst() {
-        return buffer.removeFirst();
-    }
-    public void addBufferLast(double x) {
-        buffer.addLast(x);
-    }
 
     /* Create a guitar string of the given frequency.  */
     public GuitarString(double frequency) {
