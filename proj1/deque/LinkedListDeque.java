@@ -9,7 +9,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         private T item;
         private Node next;
 
-        public Node(Node m, T i, Node n) {
+        private Node(Node m, T i, Node n) {
             prev = m; //try IMO
             item = i;
             next = n;
@@ -40,7 +40,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             return wizPos.item != null; //注意这里的wizPos不是null, 判断条件应该是wizPos.item是不是null
         }
         public T next() {
-            if(!hasNext()){
+            if (!hasNext()) {
                 throw new NoSuchElementException("No more elements in the deque.");
             } else {
                 T returnItem = wizPos.item;
@@ -93,7 +93,6 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
          while (p.next != null){
             p = p.next;
         } */
-
     }
     @Override
     public int size() {

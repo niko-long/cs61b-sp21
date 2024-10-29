@@ -15,7 +15,17 @@ public class GuitarString {
 
     /* Buffer for storing sound data. */
 
-    protected Deque<Double> buffer;
+    private Deque<Double> buffer;
+
+    public Double getBufferfirst() {
+        return buffer.get(0);
+    }
+    public  Double removeBufferFirst() {
+        return buffer.removeFirst();
+    }
+    public void addBufferLast(double x) {
+        buffer.addLast(x);
+    }
 
     /* Create a guitar string of the given frequency.  */
     public GuitarString(double frequency) {
@@ -26,6 +36,7 @@ public class GuitarString {
             buffer.addFirst(0.0);
         }
     }
+
 
 
     /* Pluck the guitar string by replacing the buffer with white noise. */
