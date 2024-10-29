@@ -7,7 +7,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private int size;
 
     public ArrayDeque() {
-        items = (T[]) new Object[100];
+        items = (T[]) new Object[8];
         size = 0;
     }
     private void resize(int capacity) {
