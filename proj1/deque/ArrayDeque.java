@@ -49,7 +49,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return wizPos < size;
         }
         public T next() {
-            T returnItem = items[wizPos];
+            T returnItem = get(wizPos);
             wizPos += 1;
             return returnItem;
         }
