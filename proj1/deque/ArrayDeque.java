@@ -116,7 +116,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         System.arraycopy(items, 1, items, 0, size - 1);
         size = size - 1;
         if (size > 0 && size < items.length * 0.25) {
-            resize(Math.max(100, items.length / 2));
+            resize(Math.max(8, items.length / 2));
         }
         return x;
     }
@@ -130,7 +130,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         items[size - 1] = null;
         size = size - 1;
         if (size > 0 && size < items.length * 0.25) {
-            resize(Math.max(100, size * 2));
+            resize(Math.max(8, items.length / 2));
         }
         return x;
     }
