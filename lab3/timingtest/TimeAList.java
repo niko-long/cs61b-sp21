@@ -29,7 +29,7 @@ public class TimeAList {
         AList<Double> times = new AList();
         AList<Integer> opCounts = new AList();
 
-        int maxcapacity = 12;
+        int maxcapacity = 8;
         for (int i = 0; i < maxcapacity; i += 1) {
             Ns.addLast((int) (1000*Math.pow(2, i)));
             opCounts.addLast((int) (1000*Math.pow(2, i)));
